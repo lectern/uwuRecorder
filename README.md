@@ -1,10 +1,13 @@
 # uwuRecorder - Minecraft Click Profiles
 
 ## What is this?
-> This is a Minecraft autoclicker that replays clicks based on your click style or one of a leaderboard player's. This method of autoclicking currently bypasses Minemen and Lunar, the 2 most popular pvp servers for 1.7 and 1.8 (provided you record enough clicks).
+> This is a Minecraft autoclicker that replays clicks based on your click style or one of a leaderboard player's.
 
 ## How do I use this?
 > First you check the record clicks checkbox, then start clicking in a supported Minecraft version. The program will record your clicks in real time. Once you have recorded enough clicks, export them. In order to replay the clicks, import your recorded clicks and tick the replay checkbox!
+
+## Is this cheating?
+> Autoclicking is bannable on some servers. Use responsibly and at your own risk.
 
 ## Current Features
 - Multiplier: Multiply the speed of your recorded clicks.
