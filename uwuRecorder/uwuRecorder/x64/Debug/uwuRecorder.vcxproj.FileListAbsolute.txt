@@ -1,6 +1,0 @@
-C:\Users\Qasim Li\Desktop\Projects\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.vcxproj.AssemblyReference.cache
-C:\Users\Qasim Li\Desktop\Projects\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.vcxproj.SuggestedBindingRedirects.cache
-C:\Users\Qasim Li\Desktop\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.vcxproj.AssemblyReference.cache
-C:\Users\Qasim Li\Desktop\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.vcxproj.SuggestedBindingRedirects.cache
-C:\Users\Qasim Li\Desktop\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.MyForm.resources
-C:\Users\Qasim Li\Desktop\uwuRecorder\uwuRecorder\x64\Debug\uwuRecorder.vcxproj.GenerateResource.cache
