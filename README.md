@@ -13,6 +13,7 @@
 - Multiplier: Multiply the speed of your recorded clicks.
 - Disable on Shift: Disables autoclicking when shifting.
 - Smart Mode: Only clicks when in game and disables when Minecraft is not focused or in inventory/chest.
+- Break Blocks: Break blocks while clicking.
 
 ## Future Features
 - Break Blocks
@@ -32,5 +33,13 @@
 > https://youtu.be/VtimjtEH-ys
 
 ![image](https://user-images.githubusercontent.com/30962319/181871624-798f6ba1-168d-4a90-8c75-6dba8058f22a.png)
+
+## Changelogs
+### v0.0
+- Initial release.
+
+### v0.1
+- Added break blocks.
+- Slightly improved accuracy.
 
 Feel free to contact me on discord @ Lectern#5112.
