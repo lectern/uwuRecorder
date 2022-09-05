@@ -16,9 +16,8 @@
 - Break Blocks: Break blocks while clicking.
 
 ## Future Features
-- Break Blocks
 - NoCickDelay (for 1.8)
-- More Accurate & Optimized Recording
+- More Accurate & Optimized Recording (in works)
 - and more! Open to suggestions.
 
 ## Supported Versions
