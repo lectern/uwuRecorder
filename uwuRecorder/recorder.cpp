@@ -1,9 +1,46 @@
 #include "recorder.h"
 
-auto last_click = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+auto last_click = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
 auto get_ms() {
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
+
+//pasted from git-eternal lol
+namespace nt
+{
+    NTSYSAPI NTSTATUS	NTAPI NtDelayExecution(
+        _In_ BOOLEAN Alertable,
+        _In_opt_ PLARGE_INTEGER DelayInterval);
+
+    inline decltype(&NtDelayExecution) pNtDelayExecution{};
+
+    // custom sleep function to fix broken randomization
+    //
+    __forceinline static void sleep(std::uint64_t delay_interval)
+    {
+        // lambda for getting NtDelayExecution pointer
+        static auto grab_nt_delay_execution = [&]() -> bool
+        {
+            pNtDelayExecution = reinterpret_cast<decltype(pNtDelayExecution)>(
+                GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtDelayExecution"));
+
+            return true;
+        };
+
+        static auto _ = grab_nt_delay_execution();
+
+        // set our periodic timer resolution to 1ms
+        timeBeginPeriod(1);
+
+        LARGE_INTEGER _delay_interval{};
+        _delay_interval.QuadPart = -static_cast<LONGLONG>(delay_interval * static_cast<std::uint64_t>(10'000));
+
+        pNtDelayExecution(false, &_delay_interval);
+
+        // reset periodic timer resolution
+        timeEndPeriod(1);
+    }
 }
 
 namespace Clicker {
@@ -13,11 +50,16 @@ namespace Clicker {
 
     void send_lclick() {
         HWND minecraft = FindWindowA("LWJGL", nullptr);
+        //HWND minecraft = GetForegroundWindow();
+
+        POINT pos{};
+        if (!GetCursorPos(&pos))
+            return;
 
         if (GetForegroundWindow() == minecraft) {
-            SendMessage(minecraft, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(0, 0));
+            PostMessage(minecraft, (DWORD)WM_LBUTTONDOWN, (DWORD)MK_LBUTTON, MAKELPARAM(pos.x, pos.y));
             if (!break_blocks) {
-                SendMessage(minecraft, WM_LBUTTONUP, MK_LBUTTON, MAKELPARAM(0, 0));
+                PostMessage(minecraft, (DWORD)WM_LBUTTONUP, (DWORD)MK_LBUTTON, MAKELPARAM(0, 0));
             }
         }
     }
@@ -51,12 +93,15 @@ namespace Recorder {
     int num_clicks = 0;
     float multiplier = 1.0;
 
+    char record_bind;
+    char replay_bind;
+
     void record_clicks() {
         HWND minecraft = FindWindowA("LWJGL", nullptr);
-        Sleep(1);
+        nt::sleep(1);
 
         if (GetAsyncKeyState(VK_LBUTTON) && (GetForegroundWindow() == minecraft) && !Clicker::is_cursor_visible()) {
-            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+            //mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 
             if (!recording) {
                 last_click = get_ms();
@@ -71,9 +116,9 @@ namespace Recorder {
             }
         }
 
-        if (get_ms() - last_click >= 300000000) {
+        if (get_ms() - last_click >= 300) {
             recording = false;  // pause recording
-            Sleep(50);
+            nt::sleep(50);
         }
     }
 
@@ -101,12 +146,8 @@ namespace Recorder {
 
             if ((GetAsyncKeyState(VK_LBUTTON) & 0x8000) && shift_disable && smart_disable) {
                 auto skip_time = get_ms() - current_time;
-                //current_time = get_ms();
-                
-                
-                //std::cout << (int)(cps / (multiplier)) << "\n";
-                //std::cout << skip_time << "\n";
-                std::this_thread::sleep_for(std::chrono::nanoseconds( (int)((cps - skip_time) / multiplier)) );
+
+                nt::sleep((int)((cps - skip_time) / multiplier));
                 
                 Clicker::send_lclick();
             }
@@ -114,7 +155,7 @@ namespace Recorder {
                 if (Clicker::break_blocks) {
                     SendMessage(Clicker::minecraft, WM_LBUTTONUP, MK_LBUTTON, MAKELPARAM(0, 0));
                 }
-                Sleep(50);
+                nt::sleep(50);
             }
         }
     }

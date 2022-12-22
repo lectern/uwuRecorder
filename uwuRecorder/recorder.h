@@ -3,8 +3,16 @@
 #include <thread>
 #include <vector>
 #include <chrono>
+#include <thread>
+#include <mutex>
 
-//#include <iostream>
+#include <iostream>
+
+#pragma comment(lib, "winmm.lib")
+
+namespace nt {
+	void sleep(std::uint64_t delay_interval);
+}
 
 namespace Clicker {
 	extern bool break_blocks;
@@ -21,6 +29,9 @@ namespace Recorder {
 
 	extern bool do_record_clicks;
 	extern bool do_replay_clicks;
+
+	extern char record_bind;
+	extern char replay_bind;
 
 	extern std::vector<int> imported_clicks;
 	extern std::vector<int> recorded_clicks;

@@ -22,6 +22,7 @@ namespace uwuRecorder {
 		MyForm(void)
 		{
 			InitializeComponent();
+			hotkey_check->RunWorkerAsync();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -63,6 +64,15 @@ namespace uwuRecorder {
 	private: System::Windows::Forms::CheckBox^ toggle_break_blocks;
 
 
+
+
+	private: System::Windows::Forms::Button^ replay_bind;
+	private: System::Windows::Forms::Button^ record_bind;
+	private: System::ComponentModel::BackgroundWorker^ hotkey_check;
+
+
+
+
 	protected:
 
 
@@ -85,6 +95,9 @@ namespace uwuRecorder {
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->recorder_panel = (gcnew System::Windows::Forms::Panel());
+			this->replay_bind = (gcnew System::Windows::Forms::Button());
+			this->record_bind = (gcnew System::Windows::Forms::Button());
+			this->toggle_break_blocks = (gcnew System::Windows::Forms::CheckBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->export_clicks = (gcnew System::Windows::Forms::Button());
@@ -105,7 +118,7 @@ namespace uwuRecorder {
 			this->replay_worker = (gcnew System::ComponentModel::BackgroundWorker());
 			this->ofd = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->sfd = (gcnew System::Windows::Forms::SaveFileDialog());
-			this->toggle_break_blocks = (gcnew System::Windows::Forms::CheckBox());
+			this->hotkey_check = (gcnew System::ComponentModel::BackgroundWorker());
 			this->recorder_panel->SuspendLayout();
 			this->multiplier_bot_panel->SuspendLayout();
 			this->header->SuspendLayout();
@@ -116,6 +129,8 @@ namespace uwuRecorder {
 			// 
 			this->recorder_panel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)),
 				static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->recorder_panel->Controls->Add(this->replay_bind);
+			this->recorder_panel->Controls->Add(this->record_bind);
 			this->recorder_panel->Controls->Add(this->toggle_break_blocks);
 			this->recorder_panel->Controls->Add(this->label9);
 			this->recorder_panel->Controls->Add(this->label8);
@@ -132,6 +147,72 @@ namespace uwuRecorder {
 			this->recorder_panel->Name = L"recorder_panel";
 			this->recorder_panel->Size = System::Drawing::Size(530, 284);
 			this->recorder_panel->TabIndex = 6;
+			// 
+			// replay_bind
+			// 
+			this->replay_bind->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->replay_bind->FlatAppearance->BorderColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->replay_bind->FlatAppearance->BorderSize = 2;
+			this->replay_bind->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->replay_bind->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->replay_bind->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->replay_bind->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(187)),
+				static_cast<System::Int32>(static_cast<System::Byte>(201)));
+			this->replay_bind->Location = System::Drawing::Point(454, 16);
+			this->replay_bind->Name = L"replay_bind";
+			this->replay_bind->Size = System::Drawing::Size(52, 27);
+			this->replay_bind->TabIndex = 31;
+			this->replay_bind->Text = L"[ bind ]";
+			this->replay_bind->UseVisualStyleBackColor = false;
+			this->replay_bind->Click += gcnew System::EventHandler(this, &MyForm::replay_bind_Click);
+			this->replay_bind->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::replay_bind_KeyPress);
+			// 
+			// record_bind
+			// 
+			this->record_bind->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->record_bind->FlatAppearance->BorderColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->record_bind->FlatAppearance->BorderSize = 2;
+			this->record_bind->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->record_bind->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(18)),
+				static_cast<System::Int32>(static_cast<System::Byte>(18)), static_cast<System::Int32>(static_cast<System::Byte>(18)));
+			this->record_bind->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->record_bind->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(187)),
+				static_cast<System::Int32>(static_cast<System::Byte>(201)));
+			this->record_bind->Location = System::Drawing::Point(190, 16);
+			this->record_bind->Name = L"record_bind";
+			this->record_bind->Size = System::Drawing::Size(52, 27);
+			this->record_bind->TabIndex = 30;
+			this->record_bind->Text = L"[ bind ]";
+			this->record_bind->UseVisualStyleBackColor = false;
+			this->record_bind->Click += gcnew System::EventHandler(this, &MyForm::record_bind_Click);
+			this->record_bind->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::record_bind_KeyPress);
+			// 
+			// toggle_break_blocks
+			// 
+			this->toggle_break_blocks->AutoSize = true;
+			this->toggle_break_blocks->FlatAppearance->CheckedBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(30)),
+				static_cast<System::Int32>(static_cast<System::Byte>(30)), static_cast<System::Int32>(static_cast<System::Byte>(30)));
+			this->toggle_break_blocks->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(31)),
+				static_cast<System::Int32>(static_cast<System::Byte>(31)), static_cast<System::Int32>(static_cast<System::Byte>(31)));
+			this->toggle_break_blocks->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->toggle_break_blocks->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->toggle_break_blocks->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)),
+				static_cast<System::Int32>(static_cast<System::Byte>(187)), static_cast<System::Int32>(static_cast<System::Byte>(201)));
+			this->toggle_break_blocks->Location = System::Drawing::Point(279, 149);
+			this->toggle_break_blocks->Name = L"toggle_break_blocks";
+			this->toggle_break_blocks->Size = System::Drawing::Size(96, 21);
+			this->toggle_break_blocks->TabIndex = 29;
+			this->toggle_break_blocks->Text = L"Break Blocks";
+			this->toggle_break_blocks->UseVisualStyleBackColor = true;
+			this->toggle_break_blocks->CheckedChanged += gcnew System::EventHandler(this, &MyForm::toggle_break_blocks_CheckedChanged);
 			// 
 			// label9
 			// 
@@ -381,25 +462,9 @@ namespace uwuRecorder {
 			// 
 			this->replay_worker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::replay_worker_DoWork);
 			// 
-			// toggle_break_blocks
+			// hotkey_check
 			// 
-			this->toggle_break_blocks->AutoSize = true;
-			this->toggle_break_blocks->FlatAppearance->CheckedBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(30)),
-				static_cast<System::Int32>(static_cast<System::Byte>(30)), static_cast<System::Int32>(static_cast<System::Byte>(30)));
-			this->toggle_break_blocks->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(31)),
-				static_cast<System::Int32>(static_cast<System::Byte>(31)), static_cast<System::Int32>(static_cast<System::Byte>(31)));
-			this->toggle_break_blocks->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->toggle_break_blocks->Font = (gcnew System::Drawing::Font(L"Segoe UI", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->toggle_break_blocks->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)),
-				static_cast<System::Int32>(static_cast<System::Byte>(187)), static_cast<System::Int32>(static_cast<System::Byte>(201)));
-			this->toggle_break_blocks->Location = System::Drawing::Point(279, 149);
-			this->toggle_break_blocks->Name = L"toggle_break_blocks";
-			this->toggle_break_blocks->Size = System::Drawing::Size(96, 21);
-			this->toggle_break_blocks->TabIndex = 29;
-			this->toggle_break_blocks->Text = L"Break Blocks";
-			this->toggle_break_blocks->UseVisualStyleBackColor = true;
-			this->toggle_break_blocks->CheckedChanged += gcnew System::EventHandler(this, &MyForm::toggle_break_blocks_CheckedChanged);
+			this->hotkey_check->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MyForm::hotkey_check_DoWork);
 			// 
 			// MyForm
 			// 
@@ -505,7 +570,9 @@ private: System::Void export_clicks_Click(System::Object^ sender, System::EventA
 		if (file.is_open() && (Recorder::recorded_clicks.size() > 0)) {
 
 			for (auto& x : Recorder::recorded_clicks) {
+				std::cout << x << "\n";
 				std::string cps_delay(std::to_string(x));
+				std::cout << cps_delay + "\n";
 
 				if (&x == &Recorder::recorded_clicks.back()) {
 					suffix = "";
@@ -589,6 +656,48 @@ private: System::Void toggle_break_blocks_CheckedChanged(System::Object^ sender,
 	}
 	else {
 		Clicker::break_blocks = false;
+	}
+}
+private: System::Void record_bind_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	if (record_bind->Text == "[ ... ]") {
+		record_bind->Text = "[ " + e->KeyChar + " ]";
+		
+		if (e->KeyChar == 27) {
+			record_bind->Text = "[ bind ]";
+		}
+		Recorder::record_bind = e->KeyChar;
+	}
+}
+private: System::Void record_bind_Click(System::Object^ sender, System::EventArgs^ e) {
+	record_bind->Text = "[ ... ]";
+}
+private: System::Void replay_bind_Click(System::Object^ sender, System::EventArgs^ e) {
+	replay_bind->Text = "[ ... ]";
+}
+private: System::Void replay_bind_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	if (replay_bind->Text == "[ ... ]") {
+		replay_bind->Text = "[ " + e->KeyChar + " ]";
+
+		if (e->KeyChar == 27) {
+			replay_bind->Text = "[ bind ]";
+		}
+		Recorder::replay_bind = e->KeyChar;
+	}
+}
+private: System::Void hotkey_check_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
+	HKL currentKBL = GetKeyboardLayout(0);
+	while (true) {
+		Sleep(0.05);
+
+		// record
+		if ((GetAsyncKeyState(VkKeyScanEx(Recorder::record_bind, currentKBL)) & 1) && Recorder::record_bind != 27) {
+			toggle_record->Checked = !toggle_record->Checked;
+		}
+
+		// replay
+		if ((GetAsyncKeyState(VkKeyScanEx(Recorder::replay_bind, currentKBL)) & 1) && Recorder::replay_bind != 27) {
+			toggle_replay->Checked = !toggle_replay->Checked;
+		}
 	}
 }
 };
