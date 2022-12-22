@@ -101,7 +101,7 @@ namespace Recorder {
         nt::sleep(1);
 
         if (GetAsyncKeyState(VK_LBUTTON) && (GetForegroundWindow() == minecraft) && !Clicker::is_cursor_visible()) {
-            //mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 
             if (!recording) {
                 last_click = get_ms();
