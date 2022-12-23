@@ -29,9 +29,10 @@
 - and more!
 
 ## Showcase
-> https://youtu.be/VtimjtEH-ys
+> https://youtu.be/5hptvFAk_Gc
+> 
+![image](https://user-images.githubusercontent.com/30962319/209260677-2bafc9ec-6fa8-4117-83bf-848ad351b900.png)
 
-![image](https://user-images.githubusercontent.com/30962319/181871624-798f6ba1-168d-4a90-8c75-6dba8058f22a.png)
 
 ## Changelogs
 ### v0.0
@@ -40,5 +41,10 @@
 ### v0.1
 - Added break blocks.
 - Slightly improved accuracy.
+
+### v0.3
+- Improved replay delay.
+- Added hotkeys.
+- Minor bug fixes.
 
 Feel free to contact me on discord @ Lectern#5112.
