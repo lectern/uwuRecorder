@@ -47,4 +47,4 @@
 - Added hotkeys.
 - Minor bug fixes.
 
-Feel free to contact me on discord @ Lectern#5112.
+Feel free to contact me on discord @ lectern
